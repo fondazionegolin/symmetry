@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Fortune</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Press+Start+2P&display=swap');
+
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('https://cdn.jsdelivr.net/npm/minecraft-font@1.0.0/MinecraftRegular-Bmg3.otf');
+        }
+
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffb300;
+            --user-color: #00a2ff;
+            --border-color: #ffb300;
+            --text-shadow: 0 0 10px;
+            --text-glow: 0 0 5px;
+        }
+
+        :root[data-theme="purple"] {
+            --bg-color: #000000;
+            --text-color: #b700ff;
+            --user-color: #00ffea;
+            --border-color: #b700ff;
+        }
+
+        :root[data-theme="purple-inverse"] {
+            --bg-color: #b700ff;
+            --text-color: #000000;
+            --user-color: #006257;
+            --border-color: #000000;
+        }
+
+        .inverted {
+            --bg-color: #ffb300;
+            --text-color: #000000;
+            --user-color: #0000ff;
+            --border-color: #000000;
+            --text-shadow: none;
+            --text-glow: none;
+        }
+
+        .green-theme {
+            --text-color: #00ff00;
+            --user-color: #00ffaa;
+            --border-color: #00ff00;
+            --text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+            --text-glow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+
+        .green-theme.inverted {
+            --bg-color: #00ff00;
+            --text-color: #000000;
+            --user-color: #006644;
+            --border-color: #000000;
+            --text-shadow: none;
+            --text-glow: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'VT323', monospace;
+            font-size: 24px;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .system-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            border-bottom: 2px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+            z-index: 1001;
+            image-rendering: pixelated;
+            font-family: 'Press Start 2P', 'Minecraft', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .system-title {
+            font-size: 28px;
+            color: var(--text-color);
+            text-shadow: var(--text-shadow);
+            margin: 10px 0;
+            transform: scale(1, 1.2);
+            -webkit-font-smoothing: none;
+            font-smooth: never;
+        }
+
+        .system-subtitle {
+            font-size: 16px;
+            color: var(--text-color);
+            text-shadow: var(--text-shadow);
+            margin: 10px 0;
+            transform: scale(1, 1.1);
+            -webkit-font-smoothing: none;
+            font-smooth: never;
+        }
+
+        .system-clock {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 20px;
+            color: var(--text-color);
+            text-shadow: var(--text-shadow);
+            margin: 10px 0;
+            -webkit-font-smoothing: none;
+            font-smooth: never;
+            position: relative;
+        }
+
+        .system-header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background: repeating-linear-gradient(
+                to right,
+                var(--border-color) 0%,
+                var(--border-color) 50%,
+                transparent 50%,
+                transparent 100%
+            );
+            background-size: 4px 1px;
+            animation: scanline 10s linear infinite;
+        }
+
+        @keyframes scanline {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 100% 0;
+            }
+        }
+
+        .glitch-effect {
+            position: relative;
+            animation: glitch 0.5s infinite;
+            image-rendering: pixelated;
+            -webkit-font-smoothing: none;
+            font-smooth: never;
+        }
+
+        .glitch-effect::before,
+        .glitch-effect::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+        }
+
+        .glitch-effect::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff0000;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+
+        .glitch-effect::after {
+            left: -2px;
+            text-shadow: -2px 0 #00ff00;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim2 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(42px, 9999px, 44px, 0);
+            }
+            20% {
+                clip: rect(12px, 9999px, 59px, 0);
+            }
+            40% {
+                clip: rect(48px, 9999px, 29px, 0);
+            }
+            60% {
+                clip: rect(73px, 9999px, 61px, 0);
+            }
+            80% {
+                clip: rect(6px, 9999px, 92px, 0);
+            }
+            100% {
+                clip: rect(25px, 9999px, 31px, 0);
+            }
+        }
+
+        @keyframes glitch-anim2 {
+            0% {
+                clip: rect(15px, 9999px, 73px, 0);
+            }
+            20% {
+                clip: rect(69px, 9999px, 52px, 0);
+            }
+            40% {
+                clip: rect(33px, 9999px, 94px, 0);
+            }
+            60% {
+                clip: rect(62px, 9999px, 82px, 0);
+            }
+            80% {
+                clip: rect(28px, 9999px, 64px, 0);
+            }
+            100% {
+                clip: rect(54px, 9999px, 47px, 0);
+            }
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0, 0);
+            }
+            10% {
+                transform: translate(-2px, 0);
+            }
+            20% {
+                transform: translate(2px, 0);
+            }
+            30% {
+                transform: translate(0, 0);
+            }
+            40% {
+                transform: translate(-1px, 0);
+            }
+            50% {
+                transform: translate(1px, 0);
+            }
+            60% {
+                transform: translate(0, 0);
+            }
+            70% {
+                transform: translate(-1px, 0);
+            }
+            80% {
+                transform: translate(1px, 0);
+            }
+            90% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        .terminal {
+            margin-top: 150px;  /* Space for the header */
+            width: calc(100vw - 100px);
+            height: calc(100vh - 250px);  /* Adjusted for header */
+            background-color: var(--bg-color);
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 179, 0, 0.3);
+            transition: all 0.5s ease;
+            font-size: 24px;
+        }
+
+        .line {
+            margin: 5px 0;
+            color: var(--text-color);
+            text-shadow: var(--text-shadow);
+        }
+
+        .bot-line {
+            color: var(--text-color);
+            text-shadow: var(--text-shadow);
+        }
+
+        .user-line {
+            color: var(--user-color);
+            text-shadow: var(--text-shadow);
+        }
+
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .prompt {
+            color: var(--text-color);
+            margin-right: 10px;
+        }
+
+        #user-input {
+            background: transparent;
+            border: none;
+            color: var(--user-color);
+            font-family: 'VT323', monospace;
+            font-size: 24px;
+            outline: none;
+            width: calc(100% - 20px);
+            text-shadow: var(--text-shadow);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background-color: var(--text-color);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+            box-shadow: var(--text-glow);
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #webcam-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background: var(--bg-color);
+            padding: 20px;
+            border: 2px solid var(--border-color);
+            display: none;
+        }
+
+        #webcam {
+            width: 640px;
+            height: 480px;
+            background: #111;
+        }
+
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            color: var(--text-color);
+            text-shadow: 0 0 20px rgba(255, 179, 0, 0.5);
+            z-index: 1001;
+        }
+
+        @keyframes processing {
+            0% { content: '▰▱▱▱▱▱▱▱'; }
+            12.5% { content: '▰▰▱▱▱▱▱▱'; }
+            25% { content: '▰▰▰▱▱▱▱▱'; }
+            37.5% { content: '▰▰▰▰▱▱▱▱'; }
+            50% { content: '▰▰▰▰▰▱▱▱'; }
+            62.5% { content: '▰▰▰▰▰▰▱▱'; }
+            75% { content: '▰▰▰▰▰▰▰▱'; }
+            87.5% { content: '▰▰▰▰▰▰▰▰'; }
+            100% { content: '▰▱▱▱▱▱▱▱'; }
+        }
+
+        .processing::after {
+            content: '▰▱▱▱▱▱▱▱';
+            animation: processing 2s infinite;
+            margin-left: 10px;
+            color: var(--text-color);
+        }
+
+        @keyframes rainbow {
+            0% { color: #ff0000; } /* Red */
+            14% { color: #ff7f00; } /* Orange */
+            28% { color: #ffff00; } /* Yellow */
+            42% { color: #00ff00; } /* Green */
+            56% { color: #0000ff; } /* Blue */
+            70% { color: #4b0082; } /* Indigo */
+            84% { color: #8f00ff; } /* Violet */
+            100% { color: #ff0000; } /* Back to red */
+        }
+
+        .rainbow-mode .bot-line,
+        .rainbow-mode .prompt {
+            animation: rainbow 5s linear infinite;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .rainbow-mode .user-line {
+            animation: rainbow 5s linear infinite reverse;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .rainbow-mode #user-input {
+            animation: rainbow 5s linear infinite reverse;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .rainbow-mode .cursor {
+            animation: rainbow 5s linear infinite reverse, blink 1s infinite;
+        }
+
+        .generated-image {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 0 10px rgba(255, 179, 0, 0.3);
+        }
+
+        .prompt-text {
+            font-style: italic;
+            margin: 5px 0 20px 0;
+            padding: 10px;
+            border-left: 2px solid var(--border-color);
+            color: var(--text-color);
+            text-shadow: var(--text-shadow);
+        }
+
+        .matrix-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 1000;
+            font-family: 'VT323', monospace;
+            font-size: 24px;
+            color: #0f0;
+        }
+
+        .rain-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            font-family: 'VT323', monospace;
+            font-size: 24px;
+            color: #00a2ff;
+        }
+
+        .mandelbrot-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 1000;
+            font-family: monospace;
+            font-size: 8px;
+            color: #fff;
+            line-height: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="system-header">
+        <div class="system-title">T-SYMMETRY</div>
+        <div class="system-subtitle">Time Operating System</div>
+        <div class="system-clock" id="system-clock"></div>
+    </div>
+    
+    <div class="terminal">
+        <div id="conversation"></div>
+        <div id="input-container" class="input-line hidden">
+            <span class="prompt">&gt;</span>
+            <input type="text" id="user-input" autocomplete="off" autofocus>
+            <span class="cursor"></span>
+        </div>
+    </div>
+
+    <div id="webcam-container">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="canvas" style="display: none;"></canvas>
+    </div>
+
+    <script>
+        let isGlitching = false;
+        let glitchTimeout = null;
+        let reverseTime = false;
+        let fakeDate = new Date();
+
+        function startGlitch() {
+            if (!isGlitching) {
+                isGlitching = true;
+                reverseTime = true;
+                const clockElement = document.getElementById('system-clock');
+                clockElement.classList.add('glitch-effect');
+                
+                // Random time jump logic
+                const timeJumpType = Math.random();
+                
+                if (timeJumpType < 0.3) {
+                    // Future dates (up to year 2525)
+                    fakeDate = new Date();
+                    const futureYear = 2025 + Math.floor(Math.random() * 500);
+                    fakeDate.setFullYear(futureYear);
+                } else if (timeJumpType < 0.6) {
+                    // Past dates (as far as year 0)
+                    fakeDate = new Date();
+                    const pastYear = Math.floor(Math.random() * 2025);
+                    fakeDate.setFullYear(pastYear);
+                } else {
+                    // Completely random dates and impossible combinations
+                    const hours = Math.floor(Math.random() * 99); // Impossible hours
+                    const minutes = Math.floor(Math.random() * 99); // Impossible minutes
+                    const seconds = Math.floor(Math.random() * 99); // Impossible seconds
+                    const month = Math.floor(Math.random() * 99); // Impossible months
+                    const day = Math.floor(Math.random() * 99) + 1; // Impossible days
+                    const year = Math.floor(Math.random() * 9999); // Years 0-9999
+                    
+                    fakeDate = new Date(year, month, day, hours, minutes, seconds);
+                }
+                
+                // Set duration for glitch effect (5-12 seconds)
+                const glitchDuration = 5000 + Math.random() * 7000;
+                
+                // During the glitch, frequently change the time direction
+                const timeDirectionInterval = setInterval(() => {
+                    if (Math.random() < 0.5) { // 50% chance to change direction
+                        reverseTime = !reverseTime;
+                    }
+                }, 500); // Check every 0.5 seconds
+                
+                glitchTimeout = setTimeout(() => {
+                    clearInterval(timeDirectionInterval);
+                    stopGlitch();
+                }, glitchDuration);
+            }
+        }
+
+        function stopGlitch() {
+            isGlitching = false;
+            reverseTime = false;
+            const clockElement = document.getElementById('system-clock');
+            clockElement.classList.remove('glitch-effect');
+            if (glitchTimeout) {
+                clearTimeout(glitchTimeout);
+                glitchTimeout = null;
+            }
+        }
+
+        function updateClock() {
+            const clockElement = document.getElementById('system-clock');
+            
+            if (reverseTime) {
+                // During glitch, count forwards or backwards with larger jumps
+                const timeStep = Math.floor(Math.random() * 30) + 1; // Random time jump 1-30 seconds
+                if (Math.random() < 0.2) { // 20% chance for larger time jumps
+                    if (Math.random() < 0.5) {
+                        fakeDate.setMinutes(fakeDate.getMinutes() + (Math.random() < 0.5 ? -1 : 1) * timeStep);
+                    } else {
+                        fakeDate.setHours(fakeDate.getHours() + (Math.random() < 0.5 ? -1 : 1) * (timeStep % 24));
+                    }
+                } else {
+                    fakeDate.setSeconds(fakeDate.getSeconds() + (reverseTime ? -timeStep : timeStep));
+                }
+                
+                const options = { 
+                    year: 'numeric', 
+                    month: '2-digit', 
+                    day: '2-digit',
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit',
+                    hour12: false
+                };
+                
+                // More frequent corrupted time format
+                if (Math.random() < 0.15) { // 15% chance for corruption
+                    let corruptedDate = fakeDate.toLocaleString('it-IT', options);
+                    
+                    // Different types of corruption
+                    const corruptionType = Math.random();
+                    
+                    if (corruptionType < 0.3) {
+                        // Replace some numbers with special characters
+                        corruptedDate = corruptedDate.replace(/\d/g, d => 
+                            Math.random() < 0.3 ? ['#','@','!','$','%','&','?'][Math.floor(Math.random() * 7)] : d
+                        );
+                    } else if (corruptionType < 0.6) {
+                        // Reverse some parts
+                        corruptedDate = corruptedDate.split('/').map(part => 
+                            Math.random() < 0.3 ? part.split('').reverse().join('') : part
+                        ).join('/');
+                    } else {
+                        // Random numbers
+                        corruptedDate = corruptedDate.replace(/\d/g, d => 
+                            Math.random() < 0.3 ? Math.floor(Math.random() * 10) : d
+                        );
+                    }
+                    
+                    clockElement.textContent = corruptedDate;
+                } else {
+                    clockElement.textContent = fakeDate.toLocaleString('it-IT', options);
+                }
+                clockElement.setAttribute('data-text', clockElement.textContent);
+            } else {
+                // Normal time
+                const now = new Date();
+                const options = { 
+                    year: 'numeric', 
+                    month: '2-digit', 
+                    day: '2-digit',
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit',
+                    hour12: false
+                };
+                clockElement.textContent = now.toLocaleString('it-IT', options);
+            }
+        }
+
+        // Update clock more frequently
+        updateClock();
+        setInterval(updateClock, 500); // Update every 0.5 seconds
+
+        // Random glitch every 15-30 seconds
+        function scheduleNextGlitch() {
+            const nextGlitch = 15000 + Math.random() * 15000; // 15-30 seconds
+            setTimeout(() => {
+                startGlitch();
+                scheduleNextGlitch();
+            }, nextGlitch);
+        }
+
+        scheduleNextGlitch();
+
+        const questions = [
+            "Raccontami chi sei...",
+            "", // La seconda domanda sarà personalizzata in base al genere
+            "Descrivimi un ricordo significativo della tua infanzia",
+            "E un evento fondamentale della tua vita?",
+            "Come ti vedi da anziano/a?"
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+        const conversation = document.getElementById('conversation');
+        const inputContainer = document.getElementById('input-container');
+        const userInput = document.getElementById('user-input');
+        const webcamContainer = document.getElementById('webcam-container');
+        const video = document.getElementById('webcam');
+        const canvas = document.getElementById('canvas');
+
+        function addBotLine(text, isProcessing = false) {
+            const line = document.createElement('div');
+            line.className = 'line bot-line';
+            if (isProcessing) {
+                line.innerHTML = `<span class="prompt">&gt;</span> ${text}<span class="processing"></span>`;
+            } else {
+                line.innerHTML = `<span class="prompt">&gt;</span> ${text}`;
+            }
+            conversation.appendChild(line);
+            inputContainer.classList.remove('hidden');
+            userInput.focus();
+            window.scrollTo(0, document.body.scrollHeight);
+            return line;
+        }
+
+        function addUserLine(text) {
+            const line = document.createElement('div');
+            line.className = 'line user-line';
+            line.innerHTML = `<span class="prompt">&gt;</span> ${text}`;
+            conversation.appendChild(line);
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        function toggleColors() {
+            document.body.classList.toggle('inverted');
+        }
+
+        function toggleRainbow() {
+            document.body.classList.toggle('rainbow-mode');
+        }
+
+        function toggleGreen() {
+            document.body.classList.toggle('green-theme');
+        }
+
+        function setYellow() {
+            document.body.classList.remove('green-theme');
+            document.body.classList.remove('rainbow-mode');
+        }
+
+        function showHelp() {
+            addBotLine('Comandi Speciali:');
+            addBotLine('• help      - Mostra questo messaggio di aiuto');
+            addBotLine('• start     - Ricomincia l\'interazione dall\'inizio');
+            addBotLine('• invert    - Inverte i colori (sfondo/testo)');
+            addBotLine('• rainbow   - Attiva/disattiva l\'effetto arcobaleno sul testo');
+            addBotLine('• green     - Attiva/disattiva il tema verde');
+            addBotLine('• yellow    - Torna al tema giallo originale');
+            addBotLine('• matrix    - Mostra l\'effetto Matrix (ESC per uscire)');
+            addBotLine('• rain      - Mostra l\'effetto pioggia (ESC per uscire)');
+            addBotLine('• mandelbrot - Mostra il frattale di Mandelbrot (ESC per uscire)');
+            addBotLine('• purple    - Attiva/disattiva il tema viola');
+            userInput.value = '';
+        }
+
+        function startInteraction() {
+            // Clear conversation and answers
+            conversation.innerHTML = '';
+            answers = [];
+            currentQuestion = 0;
+            
+            // Reset any active effects
+            document.body.classList.remove('rainbow-mode');
+            document.body.classList.remove('inverted');
+            document.body.classList.remove('green-theme');
+            document.body.removeAttribute('data-theme');
+            
+            // Show first question
+            addBotLine(questions[0]);
+            
+            // Show input
+            inputContainer.classList.remove('hidden');
+            userInput.value = '';
+            userInput.focus();
+        }
+
+        async function startWebcam() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                webcamContainer.style.display = 'block';
+                
+                let countdown = 3;
+                const countdownElement = document.createElement('div');
+                countdownElement.className = 'countdown';
+                webcamContainer.appendChild(countdownElement);
+                
+                const countdownInterval = setInterval(() => {
+                    countdownElement.textContent = countdown;
+                    countdown--;
+                    
+                    if (countdown < 0) {
+                        clearInterval(countdownInterval);
+                        countdownElement.remove();
+                        
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        canvas.getContext('2d').drawImage(video, 0, 0);
+                        
+                        const imageData = canvas.toDataURL('image/jpeg');
+                        fetch('/save_photo/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCookie('csrftoken')
+                            },
+                            body: JSON.stringify({ image: imageData })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                addBotLine(`Foto salvata come ${data.filename}`);
+                            } else {
+                                addBotLine('Errore nel salvare la foto');
+                            }
+                        });
+                        
+                        stream.getTracks().forEach(track => track.stop());
+                        webcamContainer.style.display = 'none';
+                        
+                        setTimeout(() => {
+                            currentQuestion++;
+                            addBotLine(questions[currentQuestion]);
+                        }, 1000);
+                    }
+                }, 1000);
+            } catch (err) {
+                addBotLine('Errore nell\'accesso alla webcam: ' + err.message);
+                setTimeout(() => {
+                    currentQuestion++;
+                    addBotLine(questions[currentQuestion]);
+                }, 1000);
+            }
+        }
+
+        function detectGender(text) {
+            const maleIndicators = ['sono un ragazzo', 'sono un uomo', 'sono maschio', 'mi chiamo ', 'io sono '];
+            const femaleIndicators = ['sono una ragazza', 'sono una donna', 'sono femmina', 'mi chiamo ', 'io sono '];
+            const maleNames = ['alessandro', 'andrea', 'antonio', 'giuseppe', 'giovanni', 'mario', 'luigi', 'roberto', 'stefano', 'paolo', 'francesco', 'marco', 'luca', 'bruno', 'angelo', 'carlo', 'franco', 'domenico', 'giorgio', 'piero'];
+            const femaleNames = ['maria', 'anna', 'giuseppina', 'rosa', 'angela', 'giovanna', 'teresa', 'lucia', 'carmela', 'anna maria', 'antonia', 'carla', 'elena', 'rita', 'paola', 'francesca', 'laura', 'luisa', 'sara', 'valentina'];
+            
+            text = text.toLowerCase();
+            
+            // Cerca indicatori espliciti
+            for (const indicator of maleIndicators) {
+                if (text.includes(indicator)) {
+                    const afterIndicator = text.substring(text.indexOf(indicator) + indicator.length).trim().split(' ')[0];
+                    if (maleNames.includes(afterIndicator)) {
+                        return 'male';
+                    }
+                }
+            }
+            
+            for (const indicator of femaleIndicators) {
+                if (text.includes(indicator)) {
+                    const afterIndicator = text.substring(text.indexOf(indicator) + indicator.length).trim().split(' ')[0];
+                    if (femaleNames.includes(afterIndicator)) {
+                        return 'female';
+                    }
+                }
+            }
+            
+            // Cerca nomi nel testo
+            const words = text.split(' ');
+            for (const word of words) {
+                if (maleNames.includes(word)) {
+                    return 'male';
+                }
+                if (femaleNames.includes(word)) {
+                    return 'female';
+                }
+            }
+            
+            return null;
+        }
+
+        function createMatrixEffect() {
+            const matrixDiv = document.createElement('div');
+            matrixDiv.className = 'matrix-effect';
+            document.body.appendChild(matrixDiv);
+
+            const canvas = document.createElement('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            matrixDiv.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+            const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+            const columns = Math.floor(canvas.width / 20);
+            const drops = new Array(columns).fill(1);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#0f0';
+                ctx.font = '20px VT323';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars[Math.floor(Math.random() * chars.length)];
+                    ctx.fillText(text, i * 20, drops[i] * 20);
+                    
+                    if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            const matrixInterval = setInterval(draw, 33);
+
+            function handleEsc(e) {
+                if (e.key === 'Escape') {
+                    clearInterval(matrixInterval);
+                    document.body.removeChild(matrixDiv);
+                    document.removeEventListener('keydown', handleEsc);
+                }
+            }
+
+            document.addEventListener('keydown', handleEsc);
+        }
+
+        function createRainEffect() {
+            const rainDiv = document.createElement('div');
+            rainDiv.className = 'rain-effect';
+            document.body.appendChild(rainDiv);
+
+            const canvas = document.createElement('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            rainDiv.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+            const chars = "░▒▓█";
+            const drops = [];
+            const numDrops = 100;
+
+            for (let i = 0; i < numDrops; i++) {
+                drops.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    speed: 2 + Math.random() * 3,
+                    char: chars[Math.floor(Math.random() * chars.length)]
+                });
+            }
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#00a2ff';
+                ctx.font = '24px VT323';
+                
+                drops.forEach(drop => {
+                    ctx.fillText(drop.char, drop.x, drop.y);
+                    drop.y += drop.speed;
+                    
+                    if (drop.y > canvas.height) {
+                        drop.y = 0;
+                        drop.x = Math.random() * canvas.width;
+                        drop.char = chars[Math.floor(Math.random() * chars.length)];
+                    }
+                });
+            }
+
+            const rainInterval = setInterval(draw, 33);
+
+            function handleEsc(e) {
+                if (e.key === 'Escape') {
+                    clearInterval(rainInterval);
+                    document.body.removeChild(rainDiv);
+                    document.removeEventListener('keydown', handleEsc);
+                }
+            }
+
+            document.addEventListener('keydown', handleEsc);
+        }
+
+        function createMandelbrotEffect() {
+            const mandelbrotDiv = document.createElement('div');
+            mandelbrotDiv.className = 'mandelbrot-effect';
+            document.body.appendChild(mandelbrotDiv);
+
+            const width = 150;
+            const height = 50;
+            const maxIter = 100;
+            const chars = " .:;+=xX$#@";
+
+            function mandelbrot(x0, y0) {
+                let x = 0, y = 0;
+                let iter = 0;
+                while (x*x + y*y <= 4 && iter < maxIter) {
+                    const xtemp = x*x - y*y + x0;
+                    y = 2*x*y + y0;
+                    x = xtemp;
+                    iter++;
+                }
+                return iter;
+            }
+
+            let output = "";
+            for (let j = 0; j < height; j++) {
+                for (let i = 0; i < width; i++) {
+                    const x0 = (i - width/2) * 4/width;
+                    const y0 = (j - height/2) * 4/height;
+                    const iter = mandelbrot(x0, y0);
+                    const charIndex = Math.floor(iter/maxIter * (chars.length-1));
+                    output += chars[charIndex];
+                }
+                output += "\n";
+            }
+
+            mandelbrotDiv.innerHTML = `<pre>${output}</pre>`;
+
+            function handleEsc(e) {
+                if (e.key === 'Escape') {
+                    document.body.removeChild(mandelbrotDiv);
+                    document.removeEventListener('keydown', handleEsc);
+                }
+            }
+
+            document.addEventListener('keydown', handleEsc);
+        }
+
+        function handleInput(event) {
+            if (event.key === 'Enter' && userInput.value.trim() !== '') {
+                const answer = userInput.value.trim().toLowerCase();
+                
+                if (answer === 'help') {
+                    showHelp();
+                    return;
+                }
+
+                if (answer === 'start') {
+                    startInteraction();
+                    return;
+                }
+
+                if (answer === 'invert') {
+                    const root = document.documentElement;
+                    const currentTheme = root.getAttribute('data-theme');
+                    
+                    if (currentTheme === 'purple') {
+                        root.setAttribute('data-theme', 'purple-inverse');
+                    } else if (currentTheme === 'purple-inverse') {
+                        root.setAttribute('data-theme', 'purple');
+                    } else {
+                        const currentBg = getComputedStyle(root).getPropertyValue('--bg-color');
+                        const currentText = getComputedStyle(root).getPropertyValue('--text-color');
+                        const currentBorder = getComputedStyle(root).getPropertyValue('--border-color');
+                        
+                        root.style.setProperty('--bg-color', currentText);
+                        root.style.setProperty('--text-color', currentBg);
+                        root.style.setProperty('--border-color', currentBg);
+                    }
+                    addBotLine('Tema invertito');
+                    userInput.value = '';
+                    return;
+                }
+
+                if (answer === 'green') {
+                    document.documentElement.removeAttribute('data-theme');
+                    document.body.classList.remove('yellow-theme');
+                    document.body.classList.add('green-theme');
+                    addBotLine('Tema verde attivato');
+                    userInput.value = '';
+                    return;
+                }
+
+                if (answer === 'yellow') {
+                    document.documentElement.removeAttribute('data-theme');
+                    document.body.classList.remove('green-theme');
+                    document.body.classList.add('yellow-theme');
+                    addBotLine('Tema giallo attivato');
+                    userInput.value = '';
+                    return;
+                }
+
+                if (answer === 'purple') {
+                    // Remove other themes first
+                    document.body.classList.remove('green-theme', 'yellow-theme');
+                    document.documentElement.setAttribute('data-theme', 'purple');
+                    addBotLine('Tema viola attivato');
+                    userInput.value = '';
+                    return;
+                }
+
+                if (answer === 'matrix') {
+                    createMatrixEffect();
+                    userInput.value = '';
+                    return;
+                }
+
+                if (answer === 'rain') {
+                    createRainEffect();
+                    userInput.value = '';
+                    return;
+                }
+
+                if (answer === 'mandelbrot') {
+                    createMandelbrotEffect();
+                    userInput.value = '';
+                    return;
+                }
+
+                answers.push(answer);
+                userInput.value = '';
+                inputContainer.classList.add('hidden');
+
+                if (currentQuestion === 0) {
+                    const gender = detectGender(answer);
+                    const genderText = gender === 'male' ? 'un uomo' : gender === 'female' ? 'una donna' : 'una persona';
+                    setTimeout(() => {
+                        addBotLine(`Capisco che sei ${genderText}, vuoi fare una foto per personalizzare l'esperienza?`);
+                        inputContainer.classList.remove('hidden');
+                    }, 500);
+                    currentQuestion++;
+                } else if (currentQuestion === 1) {
+                    if (answer === 'si' || answer === 'sì' || answer === 'yes') {
+                        startWebcam();
+                    } else {
+                        currentQuestion++;
+                        setTimeout(() => {
+                            addBotLine(questions[currentQuestion]);
+                            inputContainer.classList.remove('hidden');
+                        }, 500);
+                    }
+                } else if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    setTimeout(() => {
+                        addBotLine(questions[currentQuestion]);
+                        inputContainer.classList.remove('hidden');
+                    }, 500);
+                } else if (currentQuestion === questions.length - 1) {
+                    const processingLine = addBotLine('Elaborazione delle risposte in corso', true);
+                    
+                    // Debug log
+                    console.log("Sending answers:", answers);
+                    
+                    fetch('/process_answers/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({ answers: answers })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Debug log
+                        console.log("Received data:", data);
+                        
+                        processingLine.remove();
+                        addBotLine('Ecco i tuoi ritratti generati dall\'AI:');
+                        
+                        // Childhood
+                        if (data.prompts.childhood) {
+                            addBotLine('Infanzia:');
+                            if (data.images.childhood) {
+                                const imgChild = document.createElement('img');
+                                imgChild.src = data.images.childhood;
+                                imgChild.className = 'generated-image';
+                                conversation.appendChild(imgChild);
+                            }
+                            const promptChild = document.createElement('div');
+                            promptChild.className = 'prompt-text';
+                            promptChild.textContent = data.prompts.childhood;
+                            conversation.appendChild(promptChild);
+                        }
+                        
+                        // Adult
+                        if (data.prompts.adult) {
+                            addBotLine('Età adulta:');
+                            if (data.images.adult) {
+                                const imgAdult = document.createElement('img');
+                                imgAdult.src = data.images.adult;
+                                imgAdult.className = 'generated-image';
+                                conversation.appendChild(imgAdult);
+                            }
+                            const promptAdult = document.createElement('div');
+                            promptAdult.className = 'prompt-text';
+                            promptAdult.textContent = data.prompts.adult;
+                            conversation.appendChild(promptAdult);
+                        }
+                        
+                        // Elderly
+                        if (data.prompts.elderly) {
+                            addBotLine('Anzianità:');
+                            if (data.images.elderly) {
+                                const imgElderly = document.createElement('img');
+                                imgElderly.src = data.images.elderly;
+                                imgElderly.className = 'generated-image';
+                                conversation.appendChild(imgElderly);
+                            }
+                            const promptElderly = document.createElement('div');
+                            promptElderly.className = 'prompt-text';
+                            promptElderly.textContent = data.prompts.elderly;
+                            conversation.appendChild(promptElderly);
+                        }
+                        
+                        addBotLine('Digita "start" per ricominciare...');
+                        inputContainer.classList.remove('hidden');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        processingLine.remove();
+                        addBotLine('Si è verificato un errore durante la generazione delle immagini.');
+                        inputContainer.classList.remove('hidden');
+                    });
+                }
+            }
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        userInput.addEventListener('keypress', handleInput);
+        
+        // Start with first question
+        addBotLine(questions[0]);
+    </script>
+</body>
+</html>
