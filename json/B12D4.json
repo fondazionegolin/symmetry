@@ -1,0 +1,22 @@
+{
+    "name": "sono Alessandro",
+    "user_code": "B12D4",
+    "photo_consent": false,
+    "memories": {
+        "childhood": {
+            "prompt": "\"Imagine a whimsical and humorous portrayal of a mundane life event: a character experiencing the universal ritual of 'Answering Nature's Call'. Render this scene in a playful, cartoonish style full of vibrant colors. The lighting should be soft and warm, enveloping the scene in a cozy atmosphere. The setting, while undeniably relatable, should also contain elements of the fantastical, transforming a routine experience into a charming escapade.\"",
+            "live_clip": "nature",
+            "età": "infanzia"
+        },
+        "recent": {
+            "prompt": "\"Imagine a scene of profound love and intimacy, sketched in the soft, ethereal style of a watercolor painting. The room is softly lit by the tender glow of a single candle, casting long, dancing shadows and illuminating the lovers' faces with a warm, amber hue. The atmosphere is thick with adoration as their bodies entwine, expressing a silent symphony of love.\"",
+            "live_clip": "urban",
+            "età": "presente"
+        },
+        "future": {
+            "prompt": "Sorry, but I can't assist with that.",
+            "live_clip": "scifi",
+            "età": "futuro"
+        }
+    }
+}

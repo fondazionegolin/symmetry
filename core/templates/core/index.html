@@ -17,6 +17,7 @@
             --border-color: #FFB300;
             --text-shadow: 0 0 12px rgba(255, 179, 0, 0.8);
             --text-glow: 0 0 15px rgba(255, 179, 0, 0.7);
+            --user-text-color: #00ffff;
         }
 
         :root[data-theme="green"] {
@@ -79,7 +80,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: 'VT323', monospace;
-            font-size: 26px;
+            font-size: 32px;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -101,7 +102,7 @@
             top: 50px;
             left: 50px;
             width: calc(100% - 100px);
-            height: 40px;
+            height: 60px;
             background-color: var(--bg-color);
             border-bottom: 2px solid var(--border-color);
             display: flex;
@@ -120,25 +121,41 @@
         }
 
         #title {
-            font-size: 24px;
+            font-size: 32px;
             margin-right: 20px;
             flex: 1;
             text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         #clock {
-            font-size: 24px;
+            font-size: 32px;
             margin: 0 20px;
             flex: 1;
             text-align: center;
         }
 
         #user-code {
-            font-size: 24px;
+            font-size: 32px;
             margin-left: 20px;
             flex: 1;
             text-align: right;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        #user-avatar {
+            width: 56px;
+            height: 56px;
+            image-rendering: pixelated;
+            border: 2px solid var(--border-color);
+            display: none;
+            background-color: var(--bg-color);
+            box-shadow: 0 0 10px var(--text-glow);
+            margin-top: -5px;
         }
 
         #clock.glitch {
@@ -146,7 +163,7 @@
         }
 
         #user-code {
-            font-size: 24px;
+            font-size: 32px;
             margin-left: 20px;
         }
 
@@ -178,14 +195,14 @@
         }
 
         #terminal {
-            margin-top: 60px;
+            margin-top: 80px;
             width: 100%;
-            height: calc(100vh - 180px);
+            height: calc(100vh - 200px);
             background-color: var(--bg-color);
             padding: 20px;
             overflow-y: auto;
             font-family: 'VT323', monospace;
-            font-size: 26px;
+            font-size: 32px;
             color: var(--text-color);
             position: relative;
         }
@@ -207,7 +224,7 @@
         }
 
         .user-line {
-            color: var(--text-color);
+            color: var(--user-text-color);
             margin: 5px 0;
             text-shadow: var(--text-shadow);
         }
@@ -217,7 +234,7 @@
             align-items: center;
             margin: 10px 0;
             font-family: 'VT323', monospace;
-            font-size: 26px;
+            font-size: 32px;
             color: var(--text-color);
             text-shadow: var(--text-shadow);
         }
@@ -225,9 +242,9 @@
         .input-line input {
             background: transparent;
             border: none;
-            color: var(--text-color);
+            color: var(--user-text-color);
             font-family: 'VT323', monospace;
-            font-size: 26px;
+            font-size: 32px;
             margin-left: 10px;
             width: calc(100% - 30px);
             outline: none;
@@ -242,7 +259,7 @@
         .cursor {
             display: inline-block;
             width: 12px;
-            height: 26px;
+            height: 32px;
             background-color: var(--text-color);
             margin-left: 5px;
             animation: blink 1s infinite;
@@ -363,7 +380,7 @@
             background: black;
             z-index: 1000;
             font-family: 'VT323', monospace;
-            font-size: 26px;
+            font-size: 32px;
             color: #0f0;
         }
 
@@ -376,7 +393,7 @@
             background: rgba(0, 0, 0, 0.9);
             z-index: 1000;
             font-family: 'VT323', monospace;
-            font-size: 26px;
+            font-size: 32px;
             color: #00a2ff;
         }
 
@@ -455,16 +472,21 @@
     <div id="photoModal" class="modal">
         <div class="modal-content">
             <div id="countdown">3</div>
-            <video id="video" autoplay playsinline></video>
-            <canvas id="canvas" style="display:none;"></canvas>
+            <video id="video" autoplay></video>
+            <canvas id="canvas" style="display: none;"></canvas>
+            <canvas id="pixelCanvas" style="display: none;"></canvas>
         </div>
     </div>
+
     <div id="container">
         <div id="header">
             <div id="header-content">
-                <div id="title">T-SYMMETRY OPERATING SYSTEM</div>
-                <div id="clock"></div>
-                <div id="user-code">SEI IL CODICE: ---:--</div>
+                <div id="title">T-Symmetry OS</div>
+                <div id="clock">00:00:00</div>
+                <div id="user-code">
+                    <span id="code-text"></span>
+                    <img id="user-avatar" alt="User Avatar">
+                </div>
             </div>
         </div>
         <div id="terminal">
@@ -475,7 +497,7 @@
             </div>
         </div>
         <div id="webcam-container" style="display: none;">
-            <video id="webcam" autoplay playsinline></video>
+            <video id="webcam" autoplay></video>
             <canvas id="canvas"></canvas>
             <button id="capture">Scatta Foto</button>
             <button id="skip">Salta</button>
@@ -492,7 +514,7 @@
         ];
 
         let currentQuestionIndex = 0;
-        let answers = [];
+        let answers = new Array(questions.length).fill(undefined);
         let userCode = '';
         let photoBlob = null;
         
@@ -502,7 +524,8 @@
         const userInput = document.getElementById('userInput');
         const webcamContainer = document.getElementById('webcam-container');
         const clockElement = document.getElementById('clock');
-        const userCodeElement = document.getElementById('user-code');
+        const userCodeElement = document.getElementById('code-text');
+        const userAvatar = document.getElementById('user-avatar');
         const modal = document.getElementById('photoModal');
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
@@ -525,6 +548,7 @@
             const line = document.createElement('div');
             line.className = 'line user-line';
             line.textContent = text;
+            line.style.color = 'var(--user-text-color)';
             conversation.appendChild(line);
             conversation.scrollTop = conversation.scrollHeight;
         }
@@ -575,14 +599,15 @@
                     if (currentQuestionIndex === 1) {  // Seconda domanda (foto)
                         const positiveResponses = ['sì', 'si', 'yes', 'ok', 'certo'];
                         if (positiveResponses.some(response => command.includes(response))) {
-                            answers.push(text);
+                            answers[currentQuestionIndex] = text;  // Memorizza la risposta nell'indice corretto
                             handlePhoto();
-                            return;
+                        } else {
+                            answers[currentQuestionIndex] = text;  // Memorizza la risposta nell'indice corretto
+                            currentQuestionIndex++;
+                            setTimeout(askQuestion, 1000);
                         }
-                    }
-                    
-                    if (currentQuestionIndex < questions.length) {
-                        answers.push(text);
+                    } else if (currentQuestionIndex < questions.length) {
+                        answers[currentQuestionIndex] = text;  // Memorizza la risposta nell'indice corretto
                         currentQuestionIndex++;
                         if (currentQuestionIndex < questions.length) {
                             setTimeout(askQuestion, 1000);
@@ -601,17 +626,30 @@
         }
 
         async function processAllAnswers() {
+            // Verifica che abbiamo tutte le risposte necessarie
+            if (answers.length !== questions.length) {
+                console.error('Numero di risposte non valido');
+                return;
+            }
+
+            // Rimuovi eventuali buchi nell'array delle risposte
+            const validAnswers = answers.filter(answer => answer !== undefined);
+            if (validAnswers.length !== questions.length) {
+                console.error('Alcune risposte sono mancanti');
+                return;
+            }
+
             const processingLine = addBotLine('Elaborazione delle risposte in corso...', true);
             
             try {
                 console.log('Sending data:', {
-                    answers: answers,
+                    answers: validAnswers,
                     user_code: userCode,
                     photo: photoBlob ? 'present' : 'not present'
                 });
 
                 const formData = new FormData();
-                formData.append('answers', JSON.stringify(answers));
+                formData.append('answers', JSON.stringify(validAnswers));
                 formData.append('user_code', userCode);
                 
                 if (photoBlob) {
@@ -695,6 +733,7 @@
                 const video = document.getElementById('video');
                 const canvas = document.getElementById('canvas');
                 const countdown = document.getElementById('countdown');
+                const userAvatar = document.getElementById('user-avatar');
                 modal.style.display = 'block';
 
                 navigator.mediaDevices.getUserMedia({ video: true })
@@ -722,8 +761,15 @@
                                     stream.getTracks().forEach(track => track.stop());
                                     video.srcObject = null;
                                     
-                                    // Converti l'immagine in blob
-                                    canvas.toBlob(function(blob) {
+                                    // Applica l'effetto pixelato
+                                    const pixelatedCanvas = pixelateImage(canvas);
+                                    
+                                    // Mostra l'avatar
+                                    userAvatar.src = pixelatedCanvas.toDataURL('image/png');
+                                    userAvatar.style.display = 'block';
+                                    
+                                    // Converti l'immagine in blob per il salvataggio
+                                    pixelatedCanvas.toBlob(function(blob) {
                                         photoBlob = blob;
                                         modal.style.display = 'none';
                                         
@@ -744,6 +790,83 @@
                 modal.style.display = 'none';
                 setTimeout(askQuestion, 1000);
             }
+        }
+
+        function pixelateImage(sourceCanvas) {
+            const ctx = sourceCanvas.getContext('2d');
+            const pixelCanvas = document.getElementById('pixelCanvas');
+            const pixelCtx = pixelCanvas.getContext('2d');
+            
+            // Imposta le dimensioni del canvas pixelato
+            const targetWidth = 24;
+            const targetHeight = 24;
+            
+            // Imposta le dimensioni dei canvas
+            pixelCanvas.width = targetWidth;
+            pixelCanvas.height = targetHeight;
+            
+            // Prima passiamo a una risoluzione più bassa
+            pixelCtx.drawImage(sourceCanvas, 0, 0, targetWidth, targetHeight);
+            
+            // Ottieni i dati dell'immagine per processarli
+            const imageData = pixelCtx.getImageData(0, 0, targetWidth, targetHeight);
+            const data = imageData.data;
+            
+            // Calcola la luminosità media per ogni pixel e applica il colore del tema
+            const computedStyle = getComputedStyle(document.documentElement);
+            const themeColor = computedStyle.getPropertyValue('--text-color').trim();
+            
+            // Converti il colore del tema in RGB
+            let themeRGB;
+            if (themeColor.startsWith('#')) {
+                const r = parseInt(themeColor.slice(1, 3), 16);
+                const g = parseInt(themeColor.slice(3, 5), 16);
+                const b = parseInt(themeColor.slice(5, 7), 16);
+                themeRGB = [r, g, b];
+            } else if (themeColor.startsWith('rgb')) {
+                themeRGB = themeColor.match(/\d+/g).map(Number);
+            } else {
+                themeRGB = [255, 179, 0]; // Colore di fallback
+            }
+            
+            // Applica il colore del tema a ogni pixel con una scala di colore più ampia
+            for (let i = 0; i < data.length; i += 4) {
+                const brightness = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
+                
+                // Usa la luminosità per creare una scala di colore più ricca
+                if (brightness < 0.2) {
+                    // Zone molto scure: colore più scuro del tema
+                    data[i] = themeRGB[0] * 0.2;
+                    data[i + 1] = themeRGB[1] * 0.2;
+                    data[i + 2] = themeRGB[2] * 0.2;
+                } else if (brightness > 0.8) {
+                    // Zone molto chiare: colore più luminoso del tema
+                    data[i] = themeRGB[0];
+                    data[i + 1] = themeRGB[1];
+                    data[i + 2] = themeRGB[2];
+                } else {
+                    // Zone intermedie: scala del colore del tema
+                    const colorIntensity = (brightness - 0.2) / 0.6;
+                    data[i] = themeRGB[0] * colorIntensity;
+                    data[i + 1] = themeRGB[1] * colorIntensity;
+                    data[i + 2] = themeRGB[2] * colorIntensity;
+                }
+                data[i + 3] = 255; // Alpha sempre al massimo
+            }
+            
+            // Applica i dati modificati al canvas
+            pixelCtx.putImageData(imageData, 0, 0);
+            
+            // Poi torniamo a 56x56 per l'avatar finale
+            ctx.clearRect(0, 0, sourceCanvas.width, sourceCanvas.height);
+            sourceCanvas.width = 56;
+            sourceCanvas.height = 56;
+            
+            // Disegna l'immagine pixelata scalandola su
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(pixelCanvas, 0, 0, 56, 56);
+            
+            return sourceCanvas;
         }
 
         // Funzione per ottenere il codice utente all'inizio
@@ -768,7 +891,7 @@
 
         // Funzione per aggiornare il codice utente nell'header
         function updateUserCode(code) {
-            const userCodeElement = document.getElementById('user-code');
+            const userCodeElement = document.getElementById('code-text');
             if (userCodeElement) {
                 userCodeElement.textContent = `SEI IL CODICE: ${code}`;
             }

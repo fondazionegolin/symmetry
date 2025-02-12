@@ -1,0 +1,22 @@
+{
+    "name": "alessandro",
+    "user_code": "B12C6",
+    "photo_consent": false,
+    "memories": {
+        "childhood": {
+            "prompt": "\"Envision a tender scene of a mother cradling her newborn under the soft, dappled light of a waning moon, seeping through an ancient, twisted olive tree. Let the style be reminiscent of the Renaissance era, with a gentle chiaroscuro effect accentuating the curves and delicate features of mother and child. Instill the scene with an atmosphere of serenity and sacred love, evoking the timeless bond between a mother and her child.\"",
+            "live_clip": "nature",
+            "età": "infanzia"
+        },
+        "recent": {
+            "prompt": "\"Imagine an ethereal dreamscape, where a midnight forest intertwines with a cosmic sky. The trees, painted in thick, Van Gogh-like strokes, are a vibrant palette of greens and blues, thriving under the shimmering moonlight, while the sky is a swirling vortex of nebulas and stars, a living Van Gogh's Starry Night. The scene is bathed in an otherworldly glow, creating a surreal atmosphere that blurs the line between dream and reality, night and day.\"",
+            "live_clip": "urban",
+            "età": "presente"
+        },
+        "future": {
+            "prompt": "\"Imagine an ethereal dreamscape beneath a twilight sky. In this scene, a pair of ancient, twisted trees stand sentinel over a still reflecting pool, their gnarled branches reaching out like hands in silent prayer. Render this vision in a surrealistic style, the scene bathed in the soft, iridescent glow of the setting sun. The atmosphere should evoke a sense of serene solitude, a hushed whisper in the symphony of the universe.\"",
+            "live_clip": "scifi",
+            "età": "futuro"
+        }
+    }
+}
