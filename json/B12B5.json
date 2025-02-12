@@ -1,0 +1,22 @@
+{
+    "name": "invert",
+    "user_code": "B12B5",
+    "photo_consent": true,
+    "memories": {
+        "childhood": {
+            "prompt": "\"Imagine a whimsically surreal scene of a colossal, radiant Kiwi tree, the only one of its kind, being gently devoured by an unseen entity. Its emerald green leaves and sun-kissed kiwis slowly dissolving into a colorful nebula of particles, suspended in the mid-summer twilight. Capture this moment in a style reminiscent of Van Gogh's post-impressionism, with bold, expressive strokes and vibrant colors, contrasting against a backdrop of a serene, moonlit sky. Let the scene radiate an aura of mystical tranquility and poignant beauty, a poetic dance of existence and impermanence.\"",
+            "live_clip": "nature",
+            "età": "infanzia"
+        },
+        "recent": {
+            "prompt": "\"Imagine a soaring bird's-eye view of New York City at the golden hour, where skyscrapers are bathed in a warm, ethereal light. Picture the blend of Art Deco and contemporary architectural styles, with intricate details on the buildings, and the streets below teeming with life. The overall atmosphere should evoke a sense of nostalgic tranquility, as if you're flying above a city frozen in a timeless moment, imbued with the soft, poetic glow of a setting sun.\"",
+            "live_clip": "urban",
+            "età": "presente"
+        },
+        "future": {
+            "prompt": "Envision a cosmic wanderer, poised on the edge of a black hole, his silhouette outlined against the mesmerizing swirls of stardust and cosmic matter. Render this scene in a surrealist style, with vibrant hues of nebulae, illuminating the scene with an ethereal, otherworldly glow. The atmosphere should feel both ominous and serene, a poetic paradox of the immense solitude and profound peace within the infinite expanse of the cosmos.",
+            "live_clip": "scifi",
+            "età": "futuro"
+        }
+    }
+}
