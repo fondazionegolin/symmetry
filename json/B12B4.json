@@ -1,0 +1,22 @@
+{
+    "name": "alessandro",
+    "user_code": "B12B4",
+    "photo_consent": false,
+    "memories": {
+        "childhood": {
+            "prompt": "\"Picture a serene beach scene at sunset, where a child frolics in the gentle surf under the watchful eyes of his grandparents. The style should evoke the soft, dreamy quality of an impressionist painting, with the setting sun casting long shadows and bathing everything in a warm, golden light. The atmosphere is one of peace, love, and the timeless beauty of family bonds forged in the crucible of shared memories.\"",
+            "live_clip": "nature",
+            "età": "infanzia"
+        },
+        "recent": {
+            "prompt": "\"Depict the vibrant energy of Miami during a bustling art fair. The scene is bathed in the warm, tropical light of a setting sun, casting long shadows and painting everything in hues of orange, pink, and purple. The style should echo the fluid, dynamic visuals of impressionism, capturing the movement and chatter of the crowd, the eclectic mix of art displays, and the towering palm trees swaying gently in the sea breeze. The atmosphere is electric with creativity and the intoxicating allure of discovery.\"",
+            "live_clip": "urban",
+            "età": "presente"
+        },
+        "future": {
+            "prompt": "\"Depict a surreal journey of a lone figure, violently drawn towards the event horizon of a massive black hole. The scene is bathed in stark, contrasting colors, where the chilling void of the black hole clashes with the vibrant cosmic tapestry surrounding it. The artistic style must echo the works of Salvador Dali, with a blend of realism and dreamlike distortion, creating a beautiful yet unsettling atmosphere of fear and fascination.\"",
+            "live_clip": "scifi",
+            "età": "futuro"
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "name": "alessandro",
+    "user_code": "B12B3",
+    "photo_consent": true,
+    "memories": {
+        "childhood": {
+            "prompt": "\"Visualize a tranquil, late afternoon at the beach. Render the scene with the richness of Impressionist brushwork, capturing the soft, golden light of the setting sun as it bathes the gently lapping waves, the distant sailboats, and the solitary figure strolling along the shoreline. Let the atmosphere brim with peace and serenity, as if the whole world has taken a deep, contented sigh.\"",
+            "live_clip": "nature",
+            "età": "infanzia"
+        },
+        "recent": {
+            "prompt": "\"Imagine the lonely beauty of Mars, its rust-colored deserts stretching towards the horizon under a pinkish sky. Craft an artwork in the style of surrealism, where the typical bleak Martian topography is punctuated with unearthly flora and pools of liquid diamonds shimmering under the soft, ethereal glow of the distant sun. The atmosphere should evoke a sense of isolation, yet hold a captivating charm of otherworldly tranquility.\"",
+            "live_clip": "urban",
+            "età": "presente"
+        },
+        "future": {
+            "prompt": "Craft an image that encapsulates the surreal and haunting spectacle of witnessing oneself being consumed by a black hole. The style should mirror the eerie beauty of classic surrealism, with a stark contrast in lighting between the bright sparks of collapsing stars and the deep, impenetrable darkness of the black hole. The atmosphere should be thick with melancholy and suspense, creating a striking depiction of the delicate dance between life and the unknown.",
+            "live_clip": "scifi",
+            "età": "futuro"
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "name": "alessandro",
+    "user_code": "B12A0",
+    "photo_consent": true,
+    "memories": {
+        "childhood": {
+            "description": "no grazie",
+            "prompt": "Una scena che rappresenta un ricordo d'infanzia: no grazie"
+        },
+        "recent": {
+            "description": "si ho ucciso una papera e l'ho mangiat",
+            "prompt": "Una scena che rappresenta un ricordo recente: si ho ucciso una papera e l'ho mangiat"
+        },
+        "future": {
+            "description": "frjfrij",
+            "prompt": "Una scena che rappresenta una visione del futuro: frjfrij"
+        }
+    }
+}

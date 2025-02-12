@@ -1,0 +1,19 @@
+{
+    "name": "alessandro",
+    "user_code": "B12B1",
+    "photo_consent": true,
+    "memories": {
+        "childhood": {
+            "description": "no grazie",
+            "prompt": "Una scena che rappresenta un ricordo d'infanzia: no grazie"
+        },
+        "recent": {
+            "description": "si ho scopato un albero",
+            "prompt": "Una scena che rappresenta un ricordo recente: si ho scopato un albero"
+        },
+        "future": {
+            "description": "mi mangio i piedi",
+            "prompt": "Una scena che rappresenta una visione del futuro: mi mangio i piedi"
+        }
+    }
+}

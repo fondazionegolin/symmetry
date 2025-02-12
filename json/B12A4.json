@@ -1,0 +1,17 @@
+[
+  {
+    "prompt": "Create a vivid digital painting of una persona as a young, rebellious child in the heart of an ancient, dense forest. The protagonist is playfully striking a peaceful, towering dinosaur with a simple wooden stick. This clash of realities should be emphasized by choosing a whimsical, magical setting, illuminated by sunbeams peeking through thick foliage. Experiment with the bold color palette and expressive lighting techniques influenced by Thomas Kinkade's paintings for the ethereal effect. The perspective should trigger a sense of depth and exploration. Culminate the artwork into a masterpiece, highlighting every detail with precision.",
+    "live_clip": "nature",
+    "età": "infanzia"
+  },
+  {
+    "prompt": "Construct a transformative picture of una persona seated in a wheelchair, representing a pivotal moment in their life. Render the scene in the style of a vintage black and white film frame. The atmosphere should be calm, solitary, yet resilient, depicting the character's strength and determination. The light source highlighting the figure should cast dramatic shadows, inspired by Chiaroscuro, which is characteristic of Rembrandt's works. It would be seen from a frontal angle, emphasizing the persona's face expressing resilience. The final image should incorporate the granularity of a vintage film grain and the intensity of a cinematic shot.",
+    "live_clip": "abstract",
+    "età": "maturità"
+  },
+  {
+    "prompt": "Design an impressionist oil painting of una persona, now an elderly individual. Take inspiration from the beautiful serenity of Claude Monet's landscapes to recreate a peaceful garden environment around the character. The persona is observing life going by, a gentle smile adorning their weathered face. Their wisdom and tranquility are the focus points. The soft pastel colors, the delicate play of light on their face, and reflective surface of a nearby pond should create a harmonious atmosphere, signature of impressionist paintings. Attention to detail and high definition should bring this exquisite piece of life's cycle to a full circle.",
+    "live_clip": "nature",
+    "età": "vecchiaia"
+  }
+]

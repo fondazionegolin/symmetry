@@ -1,0 +1,18 @@
+{
+    "name": "Sono alessandro, ho 45 anni",
+    "photo_consent": true,
+    "memories": {
+        "childhood": {
+            "description": "Ero al mare  e mi sono perso, non trovavo più i miei genitori in una folla incredibile",
+            "prompt": "Un bambino di nome Sono alessandro, ho 45 anni in una scena che rappresenta il ricordo: Ero al mare  e mi sono perso, non trovavo più i miei genitori in una folla incredibile"
+        },
+        "recent": {
+            "description": "Ho perso i miei figli in un centro commerciale",
+            "prompt": "Un giovane uomo che vive questo momento: Ho perso i miei figli in un centro commerciale"
+        },
+        "future": {
+            "description": "Mi vedo come un anziano signore in riva al mare con la canna da pesca",
+            "prompt": "Un anziano signore dai capelli bianchi che vive questa scena futura: Mi vedo come un anziano signore in riva al mare con la canna da pesca"
+        }
+    }
+}

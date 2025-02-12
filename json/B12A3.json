@@ -1,0 +1,17 @@
+[
+  {
+    "prompt": "Un uomo, Alessandro as a child, caught in a peculiar interaction with a kangaroo during a car incident, brought to life through the lens of a vintage black-and-white photograph. The soft white lighting contrasts with the darker background, illuminating the features of both the boy and the animal. The artistic style should be reminiscent of the vintage street photography of Robert Doisneau, capturing emotions, expressions, and the unusual meeting in an accidental moment. The camera perspective should be a wide-angle shot capturing the entire car and surrounding environment. It should end with a faded, vintage film grain for an authentic, nostalgic feeling.",
+    "live_clip": "city",
+    "età": "infanzia"
+  },
+  {
+    "prompt": "Alessandro as an adult, characteristically equipped with a smoking pipe and a red beret. Render this in the timeless realm of an oil painting, in the style of the Old Masters, with deep rich shadows and a soft, Rembrandt lighting illuminating his features against a dark backdrop. The perspective of the painting should be from just slightly below eye-level, lending him authority and a strong presence. The piece should be detailed to the point where it would make a worthy addition to the gallery of a 17th-century Dutch masterpiece.",
+    "live_clip": "abstract",
+    "età": "maturità"
+  },
+  {
+    "prompt": "Imagine Alessandro in his elderly years peering into his future. This piece should be created in the cinematic style of a snapshot from a neo-noir film, reflecting deep contrasts between dark and light. Focus on the atmospheric quality: a mysterious aura, characterized by low-key lighting, intense shadows, and moody ambiance. The camera perspective should be close-up, capturing every line of time on his face, as he contemplates his future. Reinvent this vision in the rich, textured monotones of a Gregg Toland inspired style, ending with a certain cinematic quality that accentuates every intricate detail.",
+    "live_clip": "abstract",
+    "età": "vecchiaia"
+  }
+]
