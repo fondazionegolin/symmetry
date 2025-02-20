@@ -678,26 +678,11 @@
                 processingLine.remove();
                 addBotLine(`Ho generato correttamente il tuo profilo, sei il codice: ${userCode}`);
                 
-                try {
-                    console.log('Fetching JSON file:', data.json_file);
-                    const jsonResponse = await fetch('/json/' + data.json_file);
-                    
-                    if (!jsonResponse.ok) {
-                        throw new Error(`HTTP error! status: ${jsonResponse.status}`);
-                    }
-                    
-                    const jsonContent = await jsonResponse.json();
-                    console.log('JSON content:', jsonContent);
-                    
-                    if (jsonContent.error) {
-                        throw new Error(jsonContent.error);
-                    }
-                    
-                    addBotLine('Ecco il contenuto del tuo profilo:');
-                    addBotLine('<pre>' + JSON.stringify(jsonContent, null, 2) + '</pre>');
-                } catch (jsonError) {
-                    console.error('Error loading JSON:', jsonError);
-                    addBotLine('Non sono riuscito a caricare il contenuto del profilo.');
+                if (data.story) {
+                    addBotLine('Ecco cosa ho capito di te:');
+                    addBotLine(data.story);
+                } else {
+                    addBotLine('Mi dispiace, non sono riuscito a generare un racconto basato sulle tue risposte.');
                 }
                 
                 setTimeout(() => {

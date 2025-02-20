@@ -1,0 +1,20 @@
+{
+    "name": "alessandro",
+    "user_code": "B19G6",
+    "photo_consent": false,
+    "memories": {
+        "childhood": {
+            "prompt": "\"Imagine an 8-year-old child standing on jagged rocks by the sea, eyes wide with wonder as they spot a majestic whale breaching the horizon. Render this scene in the style of impressionist masters, with bold, broken brushstrokes capturing the shimmering ocean and the splashes around the whale. The atmosphere should be one of serene awe, illuminated by the soft, warm glow of a setting sun that paints the sky in hues of pink and orange.\"",
+            "live_clip": "nature"
+        },
+        "recent": {
+            "prompt": "\"Create a poignant scene of a weather-worn fisherman, his face etched by time and sea spray, who has just cut his finger on a fish hook. The moment is frozen in time as the first droplet of blood splashes into the serene, glass-like water below. The style should evoke a sense of romantic realism, with the soft glow of a setting sun casting a warm, golden light across the scene. The atmosphere should be one of solitude, tranquility, and the quiet resilience of man against the wild.\"",
+            "live_clip": "urban"
+        },
+        "future": {
+            "prompt": "\"Envision standing atop a rugged, snow-capped mountain peak under a blanket of indigo night sky, studded with twinkling stars. The atmosphere is serene, the only light comes from the celestial bodies above, casting an ethereal glow on the icy terrain. The anticipation builds as you wait for a streak of a meteorite, lighting up the sky with its fiery trail, in a style reminiscent of Van Gogh's Starry Night with its vibrant swirls and passionate strokes.\"",
+            "live_clip": "scifi"
+        }
+    },
+    "story": "Ricordo come fosse ieri, a 8 anni, la mia meraviglia di fronte alla vista di una gigantesca balena che sbucava all'orizzonte, mentre ero sugli scogli, le stesse rocce dove ieri mi sono ferito il dito pescando. Un po' di dolore non può scalfire la mia passione, né può scalfire i miei sogni del domani, dove mi vedo in cima ad una montagna, una sentinella solitaria aspettando un meteorite, osservando silenziosamente le stelle danzare nella danza infinita dell'universo."
+}

@@ -80,9 +80,9 @@ def generate_scene_prompts(answers):
         
         prompts = []
         scenes = [
-            {"description": answers[2], "età": "infanzia", "live_clip": "nature"},
-            {"description": answers[3], "età": "presente", "live_clip": "urban"},
-            {"description": answers[4], "età": "futuro", "live_clip": "scifi"}
+            {"description": answers[2], "live_clip": "nature"},
+            {"description": answers[3], "live_clip": "urban"},
+            {"description": answers[4], "live_clip": "scifi"}
         ]
         
         for scene in scenes:
@@ -105,21 +105,19 @@ def generate_scene_prompts(answers):
                 )
                 
                 prompt = response.choices[0].message.content.strip()
-                print(f"Generated prompt for {scene['età']}: {prompt}")
+                print(f"Generated prompt for {scene['live_clip']}: {prompt}")
                 
                 prompts.append({
                     "prompt": prompt,
-                    "live_clip": scene["live_clip"],
-                    "età": scene["età"]
+                    "live_clip": scene["live_clip"]
                 })
                 
             except Exception as e:
-                print(f"Error generating prompt for scene {scene['età']}: {str(e)}")
+                print(f"Error generating prompt for scene {scene['live_clip']}: {str(e)}")
                 # Fallback prompt in caso di errore
                 prompts.append({
                     "prompt": f"Create a digital painting of a person experiencing this moment: {scene['description']}",
-                    "live_clip": scene["live_clip"],
-                    "età": scene["età"]
+                    "live_clip": scene["live_clip"]
                 })
         
         print("Generated all prompts successfully:", prompts)
@@ -262,8 +260,31 @@ def process_answers(request):
                 print("Error generating scene prompts:", str(e))
                 return JsonResponse({'error': f'Errore nella generazione dei prompt: {str(e)}'})
             
-            # Crea il dizionario con i dati
             try:
+                # Genera un racconto basato sulle risposte
+                story_response = client.chat.completions.create(
+                    model="gpt-4",
+                    messages=[
+                        {"role": "system", "content": """
+                        Sei un narratore empatico che deve creare un breve racconto personale basato sulle informazioni fornite.
+                        Il racconto deve:
+                        1. Essere scritto in italiano
+                        2. Essere in prima persona, come se stessi parlando direttamente con l'utente
+                        3. Collegare i ricordi del passato, presente e futuro in modo poetico
+                        4. Essere lungo circa 3-4 frasi
+                        5. Avere un tono riflessivo e personale
+                        """},
+                        {"role": "user", "content": f"""
+                        Nome: {answers[0]}
+                        Ricordo d'infanzia: {answers[2]}
+                        Evento recente: {answers[3]}
+                        Visione del futuro: {answers[4]}
+                        """}
+                    ]
+                )
+                story = story_response.choices[0].message.content.strip()
+                
+                # Crea il dizionario con i dati
                 output_data = {
                     'name': answers[0],
                     'user_code': user_code,
@@ -272,7 +293,8 @@ def process_answers(request):
                         'childhood': scene_prompts[0],
                         'recent': scene_prompts[1],
                         'future': scene_prompts[2]
-                    }
+                    },
+                    'story': story
                 }
                 print("Output data created successfully")
             except Exception as e:
@@ -296,7 +318,8 @@ def process_answers(request):
                 
                 return JsonResponse({
                     'message': 'Dati salvati con successo',
-                    'json_file': json_filename
+                    'json_file': json_filename,
+                    'story': story
                 })
             except Exception as e:
                 print("Error saving JSON:", str(e))

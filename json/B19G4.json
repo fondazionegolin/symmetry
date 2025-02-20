@@ -1,0 +1,22 @@
+{
+    "name": "sono alessandro, maschio cis ",
+    "user_code": "B19G4",
+    "photo_consent": false,
+    "memories": {
+        "childhood": {
+            "prompt": "\"Reimagine a memory of a seven-year-old child stepping into a dimly lit, vintage-styled bar, eyes wide with curiosity. The central focus is an unexpectedly discovered wallet, brimming with cash, lying unnoticed on the weathered wooden floor. Render this in a hyperrealistic style, with dramatic chiaroscuro lighting enhancing the mystery and allure of the scene, enveloping it in a cloak of intrigue and childhood wonder.\"",
+            "live_clip": "nature",
+            "età": "infanzia"
+        },
+        "recent": {
+            "prompt": "Capture the ethereal beauty of an Icelandic landscape under the midnight sun. Use a hyper-realistic style to illustrate the sharp contrast of the black volcanic rocks against the vibrant green moss. The scene should be bathed in soft, surreal light, casting long, dreamy shadows. Let the majesty of the scenery evoke tranquillity and awe, as if time itself has paused to admire the view.",
+            "live_clip": "urban",
+            "età": "presente"
+        },
+        "future": {
+            "prompt": "Envision a poignant scene of an aged figure, exhibiting a collection of vintage cameras at a post-apocalyptic bazaar, under a bruised, yet defiantly glowing, twilight sky. Illuminate this melancholic tableau with the last rays of the sun, casting long shadows and bathing the scene in a warm, sepia-toned light. In a style that blends realism with a touch of surrealism, capture the paradox of despair and hope, the grit of survival, and the enduring beauty of antiquity amid the rugged ruins of a nuclear aftermath.",
+            "live_clip": "scifi",
+            "età": "futuro"
+        }
+    }
+}

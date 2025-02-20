@@ -1,0 +1,20 @@
+{
+    "name": "ale",
+    "user_code": "B19G7",
+    "photo_consent": false,
+    "memories": {
+        "childhood": {
+            "prompt": "\"Imagine a serene beach just moments before a colossal tsunami, the calmness of the sea disrupted by the sudden rise of an enormous wave. The artwork should present the scene in a surrealistic style, where vivid, almost psychedelic, colors contrast the impending doom. The lighting should convey the eerie calm before the storm, casting long, ominous shadows while the atmosphere remains both beautiful and foreboding, a strange dance between tranquility and terror.\"",
+            "live_clip": "nature"
+        },
+        "recent": {
+            "prompt": "\"Visualize a daring surfer, powerfully riding the crest of a towering, aquamarine wave under the radiant sunset. The scene should be rendered in a vivid, impressionistic style, the colors of the setting sun melting into the frothy sea, casting a warm, golden glow over everything. The atmosphere should encapsulate the raw energy and freedom of the surfer, the poetic dance between man and the unpredictable sea.\"",
+            "live_clip": "urban"
+        },
+        "future": {
+            "prompt": "\"Depict a serene coastal home at dawn, its weathered wooden façade kissed by the first golden rays of sunlight. The style should evoke an impressionistic painting, with soft, blended strokes capturing the gentle sea breeze rustling through the nearby seagrass, and the soothing rhythm of distant waves. The atmosphere should be peaceful and nostalgic, a poetic tribute to the timeless allure of seaside living.\"",
+            "live_clip": "scifi"
+        }
+    },
+    "story": "C'era una volta un piccolo Ale, che vide l'oceano trasformarsi in un mostro furioso, un'immagine che il mare imprimò indelebilmente nel suo cuore di bambino. Poi, contro ogni aspettativa, diventai un surfista, danzando sulla schiuma bianca delle onde, domando l'elemento che un tempo temevo. Ora, nel mio cuore, risiede un sogno futuro: vivere in una casa di mare, lasciare che il rumore tranquillizzante delle onde diventi la mia ninnananna, e forse, in un qualche modo poetico, domare il mostro dell'infanzia con la passione del presente, guardando verso un futuro di pace e libertà."
+}

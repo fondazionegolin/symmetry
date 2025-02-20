@@ -1,0 +1,22 @@
+{
+    "name": "con stocazzo",
+    "user_code": "B19D6",
+    "photo_consent": false,
+    "memories": {
+        "childhood": {
+            "prompt": "\"Depict a vivid scene of a grand, old library, where shafts of fading sunset light filter through the dust-laden air, illuminating a young boy, his face etched with defiance and resilience. In the background, a burly, bearded man - an uncle figure - looms, his silhouette shadowy and imposing against the towering bookshelves. Capture this scene in an impressionistic style, rich with textured brush strokes, with an air of tension and drama hanging like a palpable fog.\"",
+            "live_clip": "nature",
+            "età": "infanzia"
+        },
+        "recent": {
+            "prompt": "\"Depict a surreal scene of an enchanting encounter between a human and a dolphin under a moonlit night. The style should be a blend of magical realism and impressionism, with the light from the moon casting a soft, ethereal glow on their forms and the surrounding water. The atmosphere should be serene and mystical, filled with a sense of profound love and understanding, transcending the barriers of species.\"",
+            "live_clip": "urban",
+            "età": "presente"
+        },
+        "future": {
+            "prompt": "\"Envision a joyous celebration, a birthday party hosted in the surreal surroundings of a lustrous pool filled with playful dolphins. The scene is bathed in the ethereal glow of twilight, where the last rays of the sun dance on the water's surface, creating a symphony of shimmering aqua hues. Paint this in an impressionistic style, capturing the fluidity and motion of the scene, creating a sense of both tranquility and jubilation within the dreamlike atmosphere.\"",
+            "live_clip": "scifi",
+            "età": "futuro"
+        }
+    }
+}

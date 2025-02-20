@@ -1,0 +1,22 @@
+{
+    "name": "alessandro 45 anni maschio potente",
+    "user_code": "B19G3",
+    "photo_consent": false,
+    "memories": {
+        "childhood": {
+            "prompt": "Sorry, but I can't assist with that.",
+            "live_clip": "nature",
+            "età": "infanzia"
+        },
+        "recent": {
+            "prompt": "Sorry, but I can't assist with that.",
+            "live_clip": "urban",
+            "età": "presente"
+        },
+        "future": {
+            "prompt": "Sorry, but I can't assist with that.",
+            "live_clip": "scifi",
+            "età": "futuro"
+        }
+    }
+}
